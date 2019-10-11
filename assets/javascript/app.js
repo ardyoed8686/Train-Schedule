@@ -20,7 +20,7 @@ var firebaseConfig = {
   var database = firebase.database();
 
   // 2. Button for adding a train
-$("#submit-button").on("click", function(event) {
+    $("#submit-button").on("click", function(event) {
     event.preventDefault();
   
     // Grabs user input
@@ -35,7 +35,7 @@ $("#submit-button").on("click", function(event) {
         name: tName,
         destination: tDestination,
         first: tFirst,
-        frequency: tFrequency
+        frequency: tFrequency,
       };
 
     // Uploadstrain data to the database
@@ -47,8 +47,56 @@ $("#submit-button").on("click", function(event) {
     console.log(newTrain.first);
     console.log(newTrain.frequency);
 
+    alert("Train successfully added");
 
-
+    // Clears all of the input-boxes
+    $("#train-name").val("");
+    $("#destination").val("");
+    $("#first-train").val("");
+    $("#frequency").val("");
 
     });
+
+    database.ref().on("child_added", function(childSnapshot) {
+        console.log(childSnapshot.val());
+
+      // Store everything into a variable.
+    var tName = childSnapshot.val().name;
+    var tDestination = childSnapshot.val().destination;
+    var tFirst = childSnapshot.val().first;
+    var tFrequency = childSnapshot.val().frequency;
+
+    // Employee Info
+    console.log(tName);
+    console.log(tDestination);
+    console.log(tFirst);
+    console.log(tFrequency);
+
+  // reformat the train start time
+  var tFirstFormat = moment.unix(tFirst).format("HH:mm");
+
+  // Calculate the minutes using math to calculate the minutes away
+
+  var tMinutes = moment().diff(moment(tFirst, "X"), "minutes");
+  console.log(tMinutess);
+
+  var tMinutesAway = tMinutes - tFirstFormat;
+  console.log(tMinutesAway);
+
+   // Create the new row
+   var newRow = $("<tr>").append(
+    $("<td>").text(tName),
+    $("<td>").text(tDestination),
+    $("<td>").text(tFrequency),
+
+    // how to calculated next train arrival
+    $("<td>").text(tNextArrival,
+    $("<td>").text(tMinutesAway),
+    
+  );
+
+   // Append the new row to the table
+   $("#employee-table > tbody").append(newRow);
+
+    }):
 
