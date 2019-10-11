@@ -98,5 +98,5 @@ var firebaseConfig = {
    // Append the new row to the table
    $("#employee-table > tbody").append(newRow);
 
-    }):
+    });
 
