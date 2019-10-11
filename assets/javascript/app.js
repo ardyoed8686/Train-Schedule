@@ -122,7 +122,7 @@ console.log("I am the GREATEST");
   );
 
    // Append the new row to the table
-   $("#employee-table > tbody").append(newRow);
+   $("#time-table > tbody").append(newRow);
 
     });
     
