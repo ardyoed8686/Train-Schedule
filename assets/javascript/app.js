@@ -1,9 +1,9 @@
 // Initialize Firebase
 // Make sure to match the configuration to the script version number in the HTML
 // (Ex. 3.0 != 3.7.0)
-
-
-var firebaseConfig = {
+console.log("I am the GREATEST");
+  // Your web app's Firebase configuration
+  var firebaseConfig = {
     apiKey: "AIzaSyCWzt1G-BgKjEAjYPH5Om7vVrls9R-iQ4g",
     authDomain: "train-times-589ee.firebaseapp.com",
     databaseURL: "https://train-times-589ee.firebaseio.com",
@@ -18,6 +18,7 @@ var firebaseConfig = {
   
   // Create a variable to reference the database.
   var database = firebase.database();
+
 
   // 2. Button for adding a train
     $("#submit-button").on("click", function(event) {
@@ -83,14 +84,39 @@ var firebaseConfig = {
   var tMinutesAway = tMinutes - tFirstFormat;
   console.log(tMinutesAway);
 
+    // calculate next train arrival time
+
+          // First Time (pushed back 1 year to make sure it comes before current time)
+          var tFirstFormat = moment(tFirst, "HH:mm").subtract(1, "years");
+          console.log(tFirstFormat);
+      
+          // Current Time
+          var currentTime = moment();
+          console.log("CURRENT TIME: " + moment(currentTime).format("hh:mm"));
+      
+          // Difference between the times
+          var diffTime = moment().diff(moment(tFirstFormat), "minutes");
+          console.log("DIFFERENCE IN TIME: " + diffTime);
+      
+          // Time apart (remainder)
+          var tRemainder = diffTime % tFrequency;
+          console.log(tRemainder);
+      
+          // Minute Until Train
+          var tMinutesTillTrain = tFrequency - tRemainder;
+          console.log("MINUTES TILL TRAIN: " + tMinutesTillTrain);
+      
+          // Next Train
+          var tNextArrival = moment().add(tMinutesTillTrain, "minutes");
+          console.log("ARRIVAL TIME: " + moment(tNextArrival).format("hh:mm"));
+
+
    // Create the new row
    var newRow = $("<tr>").append(
     $("<td>").text(tName),
     $("<td>").text(tDestination),
     $("<td>").text(tFrequency),
-
-    // how to calculated next train arrival
-    $("<td>").text(tNextArrival,
+    $("<td>").text(tNextArrival),
     $("<td>").text(tMinutesAway),
     
   );
@@ -99,4 +125,4 @@ var firebaseConfig = {
    $("#employee-table > tbody").append(newRow);
 
     });
-
+    
