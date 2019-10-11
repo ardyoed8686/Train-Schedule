@@ -1,0 +1,11 @@
+body {
+    background-image: url("TGV_Zurich.jpg");
+    background-color: lightgray;
+    background: transparent: 50%;
+}
+
+#employee-table th,
+td {
+  display: inline-block;
+  width: 16.575%;
+}
